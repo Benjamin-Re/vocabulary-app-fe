@@ -1,0 +1,42 @@
+<div class="container">
+    
+    
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <table class="table" width>
+            <tbody>
+              <tr>
+                <td class="active">Vokabel</td>
+                <td>{{ currentVocable.deutsch }}</td>
+              </tr>
+              <tr>
+                    <td class="active"><label for="user-answer">Deine Antwort</label></td>
+                    <td><input formControlName="user-answer" type="text" name="user-answer" id="user-answer"></td>
+              </tr>
+              <tr>
+                <td  class="active">Richtige Antwort</td>
+                <td *ngIf="submitted">{{ currentVocable.spanisch }}</td>
+              </tr>
+              <tr>
+                <td class="active">Korrekt?</td>
+                <td *ngIf="isAnswerCorrect && form.touched">Richtig</td>
+                <td *ngIf="!isAnswerCorrect && form.touched">Falsch</td>
+              </tr>
+              <tr>
+                <td class="active">Beispielsatz</td>
+                <td>...</td>
+              </tr>
+              <tr>
+                <td class="active">Relevanz</td>
+                <td>...</td>
+              </tr>
+              <tr>
+                <td class="active">Status</td>
+                <td>...</td>
+              </tr>
+              <tr>
+                <td><button class="btn btn-primary" type="button">Next-></button></td>
+              </tr>
+            </tbody>
+          </table>
+    </form>
+</div>
