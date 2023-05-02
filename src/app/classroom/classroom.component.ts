@@ -34,8 +34,12 @@ export class ClassroomComponent implements OnInit {
   }
   
   nextVocable(): void {
+    this.form.reset()
     this.submitted = false
-    this.currentVocable = this.vocabulary[Math.floor(Math.random()*this.vocabulary.length)]    
+    this.isAnswerCorrect = false
+    this.currentVocable = this.vocabulary[Math.floor(Math.random()*this.vocabulary.length)]  
+    console.log("Current vocable "+ this.currentVocable);
+      
   }
 
   checkUserAnswer(): void {

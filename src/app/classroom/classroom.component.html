@@ -1,4 +1,4 @@
-<div class="container">
+
     
     
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -18,8 +18,8 @@
               </tr>
               <tr>
                 <td class="active">Korrekt?</td>
-                <td *ngIf="isAnswerCorrect && form.touched">Richtig</td>
-                <td *ngIf="!isAnswerCorrect && form.touched">Falsch</td>
+                <td *ngIf="isAnswerCorrect && submitted">Richtig</td>
+                <td *ngIf="!isAnswerCorrect && submitted">Falsch</td>
               </tr>
               <tr>
                 <td class="active">Beispielsatz</td>
@@ -34,9 +34,8 @@
                 <td>...</td>
               </tr>
               <tr>
-                <td><button class="btn btn-primary" type="button">Next-></button></td>
+                <td><button class="btn btn-primary" type="button" (click)="nextVocable()">Next-></button></td>
               </tr>
             </tbody>
           </table>
     </form>
-</div>
