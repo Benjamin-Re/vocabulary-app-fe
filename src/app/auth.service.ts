@@ -1,26 +1,34 @@
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { tap } from "rxjs";
 import { Subject } from "rxjs/internal/Subject";
 
 @Injectable()
 export class AuthService {
     isLogged: boolean = false
-    LOGIN_URL: string = 'https://vocable-trainer-2023.azurewebsites.net/login'
+    LOGIN_URL: string = 'http://127.0.0.1:5000/login_api'
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+        observe: 'response' as 'body',
+        withCredentials: true,
+        
+    }
 
     constructor(private http: HttpClient) {}
     
     login(loginData: {username:string, password:string}):void {
-        this.isLogged = true
-        /*
-        this.http.post(this.LOGIN_URL, loginData).subscribe((res: HttpResponse<any>)=>{
-            // if session id cookie is set by backend then login was successful
-            const cookies = res.headers.getAll('Set-Cookie');
-            console.log(cookies);
-            if(cookies) {
-                this.isLogged.next(true)
-            }
-          })
-          */
+        let body = new URLSearchParams()
+        body.set('username', loginData.username)
+        body.set('password', loginData.password)
+        
+        this.http.post(this.LOGIN_URL, body, this.httpOptions)
+            .subscribe((res: HttpResponse<any>)=>{
+                if(res.status == 200){
+                    this.isLogged = true
+                }
+            })
     }
 
     logout():void {
