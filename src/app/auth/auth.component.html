@@ -1,9 +1,9 @@
-<div *ngIf="authService.isLogged">
-    <button type="button" class="btn btn-primary" (click)="authService.logout()">Logout</button>
+<div *ngIf="isLoggedIn">
+    <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
 </div>
 
-<div *ngIf="!authService.isLogged">
-    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+<div *ngIf="!isLoggedIn">
+    <form [formGroup]="authForm" (ngSubmit)="login()">
         <div class="form-group">
             <label for="username">username</label>
             <input   class="form-control" formControlName="username" type="text" id="username" name="username">
@@ -16,3 +16,9 @@
         <button disabled class="btn btn-primary" type="button" (click)="switchAuthMode()">Switch to {{ isLoginMode ? 'Signup' : 'Login'}}</button>
     </form>
 </div>
+
+<br/>
+<div *ngIf="errorMessage !== null">
+    <b>{{ errorMessage }} </b>
+  </div>
+  

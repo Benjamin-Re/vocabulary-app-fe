@@ -11,6 +11,8 @@ import { AuthService } from '../auth.service';
 export class AuthComponent {
   authForm: FormGroup
   isLoginMode: boolean = true
+  errorMessage: string = null
+  isLoggedIn: boolean = false
 
   constructor(private http: HttpClient, public authService: AuthService) {}
 
@@ -19,14 +21,31 @@ export class AuthComponent {
       "username": new FormControl(null, Validators.required),
       "password": new FormControl(null, Validators.required)
     })
+    console.log("auth.components.ts > INIT");
+    this.authService.isLoggedIn().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
   }
-
-  onSubmit(): void {
+  
+  login(): void {
     let loginData = {
       username: this.authForm.get('username').value,
       password: this.authForm.get('password').value
     }
-    this.authService.login(loginData)
+    this.authService.isLoggedIn(loginData).subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      if(isLoggedIn){
+          this.errorMessage = "Authentifiziert"
+        }else{
+          this.errorMessage = "Falsche Anmeldeinformationen"
+        }
+    });
+  }
+
+  logout(): void{
+    this.authService.logout().subscribe(isLoggedIn => {
+      this.isLoggedIn = !isLoggedIn;
+    });
   }
 
   switchAuthMode(): void {
