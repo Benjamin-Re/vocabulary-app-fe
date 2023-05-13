@@ -23,7 +23,8 @@ export class ClassroomComponent implements OnInit {
       "user-answer": new FormControl(null, Validators.required)
     })
     this.vocabulary = this.vocabularyService.getVocabulary()
-    this.currentVocable = this.vocabulary[0]
+    // this.currentVocable = this.vocabulary[0]
+    this.currentVocable = this.vocabularyService.getVocableFromBackend()
   }
 
   onSubmit(): void {
